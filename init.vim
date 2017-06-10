@@ -51,6 +51,9 @@ inoremap <silent><expr> <Tab>
 " filenames like *.xml, *.html, *.xhtml, ...
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml, *.ejs"
 
+" FZF
+nnoremap <c-p> :FZF<CR>
+
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
