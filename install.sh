@@ -10,18 +10,23 @@ case "$(uname)" in
     fi
 
     echo "Installing Packages..."
-    for pkg in git tmux python3 neovim zsh; do
-      if brew list -1 | grep -q "^${pkg}\$"; then
-        echo "Package '$pkg' is installed"
-      else
-        echo "Installing package '$pkg'"
-        brew install $pkg;
-      fi
-    done
+    brew install git tmux python3 neovim zsh
     ;;
   Linux)
+    apt-get update
+    echo "Installing Packages"
+    apt-get install -y git tmux python3 neovim zsh
     ;;
 esac
+
+if [ -f ".oh-my-zsh" ]; then
+  echo "Downloading OMZ..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  echo "Downloading Spaceship theme..."
+  curl -o - https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/install.zsh | zsh
+  echo "Downloading autosuggestions..."
+  git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+fi
 
 echo "Symlinking.."
 ln -sf ~/.dotfiles/init.vim ~/.config/nvim/init.vim
