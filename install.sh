@@ -1,3 +1,5 @@
+#!/bin/bash
+
 case "$(uname)" in
   Darwin)
     which -s brew
@@ -26,6 +28,12 @@ if [ -f ".oh-my-zsh" ]; then
   curl -o - https://raw.githubusercontent.com/denysdovhan/spaceship-zsh-theme/master/install.zsh | zsh
   echo "Downloading autosuggestions..."
   git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+fi
+
+if [ -f "~/.local/share/nvim/site/autoload/plug.vim" ]; then
+  echo "Installing vim-plug"
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 echo "Symlinking.."
