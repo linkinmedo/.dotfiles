@@ -16,8 +16,13 @@ case "$(uname)" in
     ;;
   Linux)
     apt-get update
+    if [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 0 ];
+    then
+      echo "Setting nodejs 6"
+      curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    fi
     echo "Installing Packages"
-    apt-get install -y git tmux python3 neovim zsh
+    apt-get install -y git tmux python3 neovim zsh nodejs
     ;;
 esac
 
