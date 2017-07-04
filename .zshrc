@@ -83,6 +83,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 alias c="clear"
 alias vim="nvim"
+alias rmf="rm -rf"
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.config/nvim/init.vim"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
