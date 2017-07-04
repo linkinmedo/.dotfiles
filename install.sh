@@ -12,19 +12,31 @@ case "$(uname)" in
     fi
 
     echo "Installing Packages..."
-    brew install git tmux python3 neovim zsh
+    brew install git tmux python3 neovim zsh n php70
+    brew install yarn --ignore-dependencies
+    echo "Installing node LTS"
+    sudo n lts
     ;;
   Linux)
-    apt-get update
     if [ $(dpkg-query -W -f='${Status}' nodejs 2>/dev/null | grep -c "ok installed") -eq 0 ];
     then
-      echo "Setting nodejs 6"
+      echo "Setting up nodejs 6"
       curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
     fi
+    if [ $(dpkg-query -W -f='${Status}' yarn 2>/dev/null | grep -c "ok installed") -eq 0 ];
+    then
+      echo "Setting up yarn repo"
+      curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+    fi
+    apt-get update
     echo "Installing Packages"
-    apt-get install -y git tmux python3 neovim zsh nodejs
+    apt-get install -y git tmux python3 neovim zsh nodejs yarn
     ;;
 esac
+
+echo "installing npm Packages"
+yarn global add grunt-cli gulp-cli
 
 if [ -f ".oh-my-zsh" ]; then
   echo "Downloading OMZ..."
