@@ -27,6 +27,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
+Plug 'junegunn/vim-easy-align'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -53,6 +54,12 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml, *.ejs"
 
 " FZF
 nnoremap <c-p> :FZF<CR>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
