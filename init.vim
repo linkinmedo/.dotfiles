@@ -18,7 +18,10 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'sheerun/vim-polyglot'
 Plug 'tomtom/tcomment_vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -28,9 +31,26 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'jiangmiao/auto-pairs'
 Plug 'alvan/vim-closetag'
 Plug 'junegunn/vim-easy-align'
+Plug 'shime/vim-livedown'
 
 " All of your Plugins must be added before the following line
 call plug#end()
+
+" General maping
+
+" Ctrl+a to jump to end of line
+:imap <C-a> <Esc>A
+
+" Keep lines selected after indentation
+vmap > >gv
+vmap < <gv
+
+" Play @q with Q
+nnoremap Q @q
+
+" remap j and k to scroll by visual lines
+nnoremap j gj
+nnoremap k gk
 
 "Airline
 let g:airline_powerline_fonts=1
@@ -38,19 +58,13 @@ let g:airline_theme='solarized'
 let g:airline_solarized_bg='dark'
 "let g:Powerline_symbols='unicode'
 
+" maping TComment
 let mapleader=','
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-" Let <Tab> also do completion
-inoremap <silent><expr> <Tab>
-\ pumvisible() ? "\<C-n>" :
-\ deoplete#mappings#manual_complete()
-
-" filenames like *.xml, *.html, *.xhtml, ...
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml, *.ejs"
+" Setup Closetag
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml, *.ejs, *.js"
 
 " FZF
 nnoremap <c-p> :FZF<CR>
@@ -79,7 +93,7 @@ set incsearch   " do incremental searching
 set noswapfile  " Does not create swap files for VIM
 
 " Don't use Ex mode, use Q for formatting
-map Q gq
+" map Q gq
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
@@ -229,7 +243,7 @@ function! HasPaste()
     endif
 endfunction
 
-"set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
+set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors
 "let g:Powerline_symbols = 'unicode'
 
 au BufNewFile,BufRead *.ejs set filetype=html
@@ -237,30 +251,30 @@ au BufNewFile,BufRead *.ejs set filetype=html
 autocmd QuickFixCmdPost *grep* cwindow
 au FileType python  set tabstop=4 shiftwidth=4 textwidth=140 softtabstop=4
 
-hi CursorColumn cterm=NONE ctermbg=black
+" hi CursorColumn cterm=NONE ctermbg=black
 "ctermfg=white guibg=darkred guifg=white
-set cursorcolumn
+" set cursorcolumn
 
 " au VimEnter * RainbowParenthesesToggle
 " au Syntax * RainbowParenthesesLoadRound
 " au Syntax * RainbowParenthesesLoadSquare
 " au Syntax * RainbowParenthesesLoadBraces
 
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+" let g:rbpt_colorpairs = [
+"     \ ['brown',       'RoyalBlue3'],
+"     \ ['Darkblue',    'SeaGreen3'],
+"     \ ['darkgreen',   'firebrick3'],
+"     \ ['darkcyan',    'RoyalBlue3'],
+"     \ ['darkred',     'SeaGreen3'],
+"     \ ['darkmagenta', 'DarkOrchid3'],
+"     \ ['brown',       'firebrick3'],
+"     \ ['darkmagenta', 'DarkOrchid3'],
+"     \ ['Darkblue',    'firebrick3'],
+"     \ ['darkgreen',   'RoyalBlue3'],
+"     \ ['darkcyan',    'SeaGreen3'],
+"     \ ['darkred',     'DarkOrchid3'],
+"     \ ['red',         'firebrick3'],
+"     \ ]
 " Syntastic
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list            = 1
@@ -288,7 +302,7 @@ set wildignore+=*.jpg,*.png,*.xpm,*.gif,*.pdf
 set ignorecase
 set smartcase
 
-" ColorScheme 
+" ColorScheme
 syntax enable
 set background=dark
 colorscheme solarized8_dark_flat
