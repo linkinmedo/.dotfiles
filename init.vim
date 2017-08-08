@@ -52,6 +52,13 @@ nnoremap Q @q
 nnoremap j gj
 nnoremap k gk
 
+" Ctrl h & l move tabs
+noremap <C-l> gt
+noremap <C-h> gT
+
+" Ctrl+c will copy to clipboard
+map <C-c> "+y
+
 "Airline
 let g:airline_powerline_fonts=1
 let g:airline_theme='solarized'
