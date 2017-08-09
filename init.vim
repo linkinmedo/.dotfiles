@@ -20,7 +20,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tomtom/tcomment_vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
@@ -62,6 +63,11 @@ let g:airline_solarized_bg='dark'
 let mapleader=','
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+" deoplete tab-complete
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 
 " Setup Closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml, *.ejs, *.js"
