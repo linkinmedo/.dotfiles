@@ -39,6 +39,12 @@ call plug#end()
 
 " General maping
 
+" ale fix config
+" Fix JavaScript code with ESlint
+let g:ale_fixers = {}
+let g:ale_fixers.javascript = ['eslint']
+let g:ale_fix_on_save = 1
+
 " Ctrl+a to jump to end of line
 :imap <C-a> <Esc>A
 
