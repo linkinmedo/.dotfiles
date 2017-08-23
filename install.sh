@@ -36,7 +36,7 @@ case "$(uname)" in
 esac
 
 echo "installing npm Packages"
-yarn global add grunt-cli gulp-cli
+yarn global add grunt-cli gulp-cli livedown
 
 if [ -f ".oh-my-zsh" ]; then
   echo "Downloading OMZ..."
