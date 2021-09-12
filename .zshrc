@@ -88,8 +88,9 @@ source $ZSH/oh-my-zsh.sh
 alias c="clear"
 alias vim="nvim"
 alias rmf="rm -rf"
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="vim ~/.config/nvim/init.vim"
+alias zshconfig="vim ~/.dotfiles/.zshrc"
+alias vimconfig="vim ~/.dotfiles/init.lua"
+alias reload="source ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
