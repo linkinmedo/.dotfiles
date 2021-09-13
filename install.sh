@@ -41,7 +41,12 @@ else
   echo "packer.nvim found"
 fi
 
-echo "Symlinking.."
+echo "Remove old configs..."
+rm -rf ~/.config/nvim/init.lua
+rm -rf ~/.config/nvim/lua
+rm -rf ~/.zshrc
+
+echo "Symlinking..."
 ln -sf ~/.dotfiles/init.lua ~/.config/nvim/init.lua
 ln -sf ~/.dotfiles/lua ~/.config/nvim/lua
 ln -sf ~/.dotfiles/.zshrc ~/.zshrc
