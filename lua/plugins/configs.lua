@@ -20,9 +20,11 @@ return require('packer').startup(function()
 
   use 'norcalli/nvim-colorizer.lua'
 
-   use {'dracula/vim', as = 'dracula'}
+  use {'dracula/vim', as = 'dracula'}
 
   use 'kyazdani42/nvim-web-devicons'
+
+  use 'hoob3rt/lualine.nvim'
 
   use 'kyazdani42/nvim-tree.lua'
 
