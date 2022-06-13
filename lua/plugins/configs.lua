@@ -14,7 +14,12 @@ return require('packer').startup(function()
 
   use 'neovim/nvim-lspconfig'
 
-  use 'kabouzeid/nvim-lspinstall'
+  -- Keep it since it's required by many things
+  use 'nvim-lua/plenary.nvim'
+
+  use 'jose-elias-alvarez/null-ls.nvim'
+
+  use 'williamboman/nvim-lsp-installer'
 
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
 
@@ -42,18 +47,17 @@ return require('packer').startup(function()
 
   use {
     'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}}
+    requires = 'nvim-lua/popup.nvim'
   }
 
   use {
     'lewis6991/gitsigns.nvim',
-    requires = 'nvim-lua/plenary.nvim',
     config = function()
       require('gitsigns').setup()
     end
   }
 
-  use {'akinsho/flutter-tools.nvim', requires = 'nvim-lua/plenary.nvim'}
+  use {'akinsho/flutter-tools.nvim'}
 
   use 'hrsh7th/nvim-compe'
 

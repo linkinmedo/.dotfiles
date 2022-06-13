@@ -3,6 +3,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.wo.number = true
 vim.wo.relativenumber = true
+vim.o.hidden = true -- open new tab from tree even when file is not saved
 
 -- indentation size and expand tabs
 vim.bo.tabstop = 2

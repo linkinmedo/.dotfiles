@@ -2,6 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
+eval "$(/opt/homebrew/bin/brew shellenv)"
 export ZSH=~/.oh-my-zsh
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/tools
@@ -94,3 +95,12 @@ alias reload="source ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# fnm config
+eval "$(fnm env)"
+
+# frum config
+eval "$(frum init)"
+
+# Postgress user password
+export DB_USER_PASS="open123"
