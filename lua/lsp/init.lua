@@ -10,10 +10,22 @@ local lsp = vim.lsp
 null_ls.setup({
   sources = { null_ls.builtins.formatting.prettier.with({
     prefer_local = "node_modules/.bin",
-        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "scss", "json" },
-    }) }
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "css", "scss", "json" },
+  }) }
 })
 -- lsp_config['null-ls'].setup({})
+--
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics,
+  {
+    underline = true,
+    virtual_text = {
+      spacing = 5,
+      severity_limit = 'Warning',
+    },
+    update_in_insert = true,
+  }
+)
 
 -- Install missing servers
 local required_servers = { "bashls", "cssls", "html", "jsonls", "sumneko_lua", "tsserver", "vimls", "yamlls", "eslint" }
@@ -21,9 +33,9 @@ for _, server in pairs(required_servers) do
   local server_available, requested_server = lsp_install_servers.get_server(server);
   if server_available then
     if not requested_server:is_installed() then
-        -- Queue the server to be installed
-        -- requested_server:install()
-        lsp_install.install(server)
+      -- Queue the server to be installed
+      -- requested_server:install()
+      lsp_install.install(server)
     end
   end
 end
@@ -35,74 +47,74 @@ end
 -- end
 
 lsp_install.on_server_ready(function(server)
-    local opts = {
-      on_attach = on_attach,
+  local opts = {
+    on_attach = on_attach,
+  }
+
+  -- (optional) Customize the options passed to the server
+  -- if server.name == "tsserver" then
+  --     opts.root_dir = function() ... end
+  -- end
+  if server.name == "eslint" then
+    opts.on_attach = function(client, bufnr)
+      -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
+      -- the resolved capabilities of the eslint server ourselves!
+      client.server_capabilities.document_formatting = true
+      on_attach(client)
+    end
+    opts.settings = {
+      format = { enable = true }, -- this will enable formatting
     }
+  end
 
-    -- (optional) Customize the options passed to the server
-    -- if server.name == "tsserver" then
-    --     opts.root_dir = function() ... end
+  if server.name == "cssls" then
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    opts.capabilities = capabilities
+    opts.filetypes = { "css", "scss", "less" }
+  end
+
+  if server.name == "html" then
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    opts.capabilities = capabilities
+  end
+
+  if server.name == "jsonls" then
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    opts.capabilities = capabilities
+    -- opts.on_attach = function (client, bufnr)
+    --   -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
+    --   -- the resolved capabilities of the eslint server ourselves!
+    --   client.resolved_capabilities.document_formatting = false
+    --   on_attach(client)
     -- end
-    if server.name == "eslint" then
-      opts.on_attach = function (client, bufnr)
-        -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
-        -- the resolved capabilities of the eslint server ourselves!
-        client.resolved_capabilities.document_formatting = true
-        on_attach(client)
-      end
-      opts.settings = {
-        format = { enable = true }, -- this will enable formatting
-      }
-    end
+  end
 
-    if server.name == "cssls" then
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      opts.capabilities = capabilities
-      opts.filetypes = { "css", "scss", "less" }
-    end
-
-    if server.name == "html" then
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      opts.capabilities = capabilities
-    end
-
-    if server.name == "jsonls" then
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities.textDocument.completion.completionItem.snippetSupport = true
-      opts.capabilities = capabilities
-      -- opts.on_attach = function (client, bufnr)
-      --   -- neovim's LSP client does not currently support dynamic capabilities registration, so we need to set
-      --   -- the resolved capabilities of the eslint server ourselves!
-      --   client.resolved_capabilities.document_formatting = false
-      --   on_attach(client)
-      -- end
-    end
-
-    if server.name == "sumneko_lua" then
-      opts.settings = {
-        Lua = {
-          diagnostics = {
-            enable = true,
-            globals = {
-              "vim",
-              "use",
-              "describe",
-              "it",
-              "before_each",
-              "after_each",
-              "awesome",
-              "theme",
-              "client"
-            }
+  if server.name == "sumneko_lua" then
+    opts.settings = {
+      Lua = {
+        diagnostics = {
+          enable = true,
+          globals = {
+            "vim",
+            "use",
+            "describe",
+            "it",
+            "before_each",
+            "after_each",
+            "awesome",
+            "theme",
+            "client"
           }
         }
       }
-    end
+    }
+  end
 
 
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
+  -- This setup() function is exactly the same as lspconfig's setup function.
+  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+  server:setup(opts)
 end)

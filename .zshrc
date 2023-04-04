@@ -92,6 +92,7 @@ alias rmf="rm -rf"
 alias zshconfig="vim ~/.dotfiles/.zshrc"
 alias vimconfig="vim ~/.dotfiles/init.lua"
 alias reload="source ~/.zshrc"
+alias pn="pnpm"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -104,3 +105,11 @@ eval "$(frum init)"
 
 # Postgress user password
 export DB_USER_PASS="open123"
+
+# pnpm
+export PNPM_HOME="/Users/mohsh/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
