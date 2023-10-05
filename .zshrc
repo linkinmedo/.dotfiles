@@ -4,9 +4,11 @@
 # Path to your oh-my-zsh installation.
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export ZSH=~/.oh-my-zsh
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
+export ANDROID_HOME=$HOME/android
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$HOME/flutter/bin
 [ -z "$TMUX" ] && export TERM=xterm-256color
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -113,3 +115,10 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+# bun completions
+[ -s "/Users/mohsh/.bun/_bun" ] && source "/Users/mohsh/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
